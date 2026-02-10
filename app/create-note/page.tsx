@@ -5,7 +5,6 @@ import CustomDropdown from "../../components/CustomDropdown";
 import { useState } from "react";
 import CustomButton from "@/components/CustomButton";
 import { Category, NoteType } from "@/types/types";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const CustomForm = () => {
