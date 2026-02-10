@@ -1,20 +1,38 @@
 import { NextResponse, NextRequest } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-
-const filePath = path.join(process.cwd(), "/app/api/notes/notes.json");
+import { db } from "./firebase";
 
 export async function GET() {
-  const data = await fs.readFile(filePath, "utf-8");
-  const notes = JSON.parse(data);
-  return NextResponse.json(notes);
+  try {
+    const snapshot = await db.collection("notes").get();
+    const notes = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    return NextResponse.json(notes);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Ошибка получения заметок" },
+      { status: 500 },
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {
-  const note = await request.json();
-  const data = await fs.readFile(filePath, "utf-8");
-  const notes = JSON.parse(data);
-  notes.push(note);
-  await fs.writeFile(filePath, JSON.stringify(notes, null, 2));
-  return NextResponse.json({ success: true, note });
+  try {
+    const note = await request.json();
+    const docRef = await db.collection("notes").add(note);
+    return NextResponse.json({ success: true, id: docRef.id, ...note });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Ошибка добавления заметки" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { id } = await request.json(); // исправлено: вызов функции
+    await db.collection("notes").doc(String(id)).delete();
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ error: "Error deleting note" }, { status: 500 });
+  }
 }

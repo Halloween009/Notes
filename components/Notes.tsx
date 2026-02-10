@@ -35,7 +35,10 @@ const Notes = () => {
     const fetchNotes = async () => {
       const res = await fetch("/api/notes");
       const data = await res.json();
-      setNotes(data);
+      if (Array.isArray(data)) setNotes(data);
+      else {
+        setNotes([]);
+      }
     };
     fetchNotes();
   }, []);
