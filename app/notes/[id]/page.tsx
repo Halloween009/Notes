@@ -6,8 +6,9 @@ export default async function NotePage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const { id } = await params;
-  const res = await fetch(`/api/notes/${id}`);
+  const res = await fetch(`${baseUrl}/api/notes/${id}`);
   const note = await res.json();
   if (!note) return <div>Заметка не найдена</div>;
   return (
