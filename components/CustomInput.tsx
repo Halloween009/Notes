@@ -5,7 +5,8 @@ const CustomInput = ({
   value,
   placeholder,
   onChange,
-}: CustomInputProps) => (
+  required = false,
+}: CustomInputProps & { required?: boolean }) => (
   <input
     className="placeholder:text-black p-3 border rounded-2xl bg-white"
     name={name}
@@ -13,6 +14,7 @@ const CustomInput = ({
     type="text"
     placeholder={placeholder}
     onChange={onChange}
+    required={required}
   />
 );
 

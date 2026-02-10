@@ -6,12 +6,8 @@ export async function GET(
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  console.log("API /api/notes/[id] params.id =", id);
   try {
     const snapshot = await db.collection("notes").get();
-    const allIds = snapshot.docs.map((doc) => doc.id);
-    console.log("Все id в базе:", allIds);
-    console.log("Искомый id:", id);
     const note = snapshot.docs.find((doc) => doc.id === String(id));
     if (!note) {
       return NextResponse.json(

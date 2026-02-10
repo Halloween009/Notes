@@ -39,7 +39,13 @@ const CustomForm = () => {
   return (
     <div className="flex flex-col text-center">
       <h1 className="text-3xl mt-4 text-white">Creating new note</h1>
-      <form className="text-black flex flex-col gap-3 w-3xl align-middle mx-auto p-10 rounded-2xl">
+      <form
+        className="text-black flex flex-col gap-3 w-3xl align-middle mx-auto p-10 rounded-2xl"
+        onSubmit={async (e) => {
+          e.preventDefault();
+          await handleAdd();
+        }}
+      >
         <CustomInput
           name="title"
           value={title}
@@ -81,7 +87,7 @@ const CustomForm = () => {
             onChange={(e) => setUrl(e.target.value)}
           />
         )}
-        <CustomButton onClick={handleAdd}>Add note</CustomButton>
+        <CustomButton type="submit">Add note</CustomButton>
       </form>
     </div>
   );

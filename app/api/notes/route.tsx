@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: Request) {
   try {
-    const { id } = await request.json(); // исправлено: вызов функции
+    const { id } = await request.json();
     await db.collection("notes").doc(String(id)).delete();
     return NextResponse.json({ success: true });
   } catch (error) {

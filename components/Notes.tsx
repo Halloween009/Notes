@@ -15,7 +15,6 @@ const NotesList = ({ notes }: { notes: Note[] }) => (
           <p>{note.title}</p>
           <p>Category:{note.category}</p>
           <p>Created:{note.createdAt}</p>
-          <p>Id: {note.id}</p>
         </div>
       </Link>
     ))}
