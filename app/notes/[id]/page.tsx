@@ -9,6 +9,9 @@ export default async function NotePage({
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const { id } = await params;
   const res = await fetch(`${baseUrl}/api/notes/${id}`);
+  if (!res.ok) {
+    return <div>Ошибка загрузки заметки</div>;
+  }
   const note = await res.json();
   if (!note) return <div>Заметка не найдена</div>;
   return (
