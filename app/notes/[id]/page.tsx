@@ -27,6 +27,7 @@ export default async function NotePage({
           <p>Description: {note.description}</p>
           <p>Category: {note.category}</p>
           <p>Date: {note.createdAt}</p>
+          <p>Id: {note.id}</p>
           {note?.type === "link" && <p>{note?.url}</p>}
         </div>
       </article>
