@@ -10,12 +10,22 @@ export async function GET(
     const doc = await db.collection("notes").doc(String(id)).get();
     if (!doc.exists) {
       // ВОЗВРАЩАЕМ projectId для диагностики
-      return NextResponse.json({ error: "not found", projectId: process.env.FIREBASE_PROJECT_ID }, { status: 404 });
+      return NextResponse.json(
+        { error: "not found", projectId: process.env.FIREBASE_PROJECT_ID },
+        { status: 404 },
+      );
     }
-    return NextResponse.json({ id: doc.id, ...doc.data(), projectId: process.env.FIREBASE_PROJECT_ID });
+    return NextResponse.json({
+      id: doc.id,
+      ...doc.data(),
+      projectId: process.env.FIREBASE_PROJECT_ID,
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    return NextResponse.json({ error: message, projectId: process.env.FIREBASE_PROJECT_ID }, { status: 500 });
+    return NextResponse.json(
+      { error: message, projectId: process.env.FIREBASE_PROJECT_ID },
+      { status: 500 },
+    );
   }
 }
 
