@@ -7,7 +7,7 @@ export default async function NotePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const res = await fetch(`http://localhost:3000/api/notes/${id}`);
+  const res = await fetch(`/api/notes/${id}`);
   const note = await res.json();
   if (!note) return <div>Заметка не найдена</div>;
   return (
