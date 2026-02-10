@@ -9,23 +9,6 @@ export default async function NotePage({
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const { id } = await params;
   const res = await fetch(`${baseUrl}/api/notes/${id}`);
-  if (!res.ok) {
-    const text = await res.text();
-    let projectId = "";
-    try {
-      const json = JSON.parse(text);
-      projectId = json.projectId ? ` (projectId: ${json.projectId})` : "";
-    } catch {}
-    return (
-      <div>
-        Ошибка загрузки заметки: {res.status} {text}
-        <br />
-        {projectId && (
-          <span style={{ color: "red" }}>ProjectId: {projectId}</span>
-        )}
-      </div>
-    );
-  }
   const note = await res.json();
   if (!note) return <div>Заметка не найдена</div>;
   return (

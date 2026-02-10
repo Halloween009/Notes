@@ -14,8 +14,8 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const note = await request.json();
-    const docRef = await db.collection("notes").add(note);
-    return NextResponse.json({ success: true, id: docRef.id, ...note });
+    await db.collection("notes").doc(String(note.id)).set(note);
+    return NextResponse.json({ success: true, id: note.id, ...note });
   } catch (error) {
     return NextResponse.json({ error: "Error adding note" }, { status: 500 });
   }
