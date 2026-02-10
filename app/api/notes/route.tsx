@@ -7,10 +7,7 @@ export async function GET() {
     const notes = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     return NextResponse.json(notes);
   } catch (error) {
-    return NextResponse.json(
-      { error: "Ошибка получения заметок" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Error getting error" }, { status: 500 });
   }
 }
 
@@ -20,10 +17,7 @@ export async function POST(request: NextRequest) {
     const docRef = await db.collection("notes").add(note);
     return NextResponse.json({ success: true, id: docRef.id, ...note });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Ошибка добавления заметки" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Error adding note" }, { status: 500 });
   }
 }
 

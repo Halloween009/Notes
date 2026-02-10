@@ -43,6 +43,10 @@ const Notes = () => {
     fetchNotes();
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [category, found]);
+
   const onPageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -67,10 +71,6 @@ const Notes = () => {
     (currentPage - 1) * limit,
     currentPage * limit,
   );
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [category, found]);
 
   return (
     <div className="flex flex-col w-3/4 items-center">
