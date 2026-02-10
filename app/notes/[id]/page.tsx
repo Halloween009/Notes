@@ -10,7 +10,7 @@ export default async function NotePage({
   const { id } = await params;
   const res = await fetch(`${baseUrl}/api/notes/${id}`);
   if (!res.ok) {
-    let text = await res.text();
+    const text = await res.text();
     let projectId = "";
     try {
       const json = JSON.parse(text);
