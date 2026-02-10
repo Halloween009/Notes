@@ -9,16 +9,16 @@ export async function GET(
   try {
     const doc = await db.collection("notes").doc(String(id)).get();
     if (!doc.exists) {
-      // ВОЗВРАЩАЕМ projectId для диагностики
+      // ВОЗВРАЩАЕМ ВСЕ process.env для диагностики
       return NextResponse.json(
-        { error: "not found", projectId: process.env.FIREBASE_PROJECT_ID },
+        { error: "not found", env: process.env },
         { status: 404 },
       );
     }
     return NextResponse.json({
       id: doc.id,
       ...doc.data(),
-      projectId: process.env.FIREBASE_PROJECT_ID,
+      env: process.env,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
