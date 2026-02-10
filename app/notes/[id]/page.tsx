@@ -10,7 +10,12 @@ export default async function NotePage({
   const { id } = await params;
   const res = await fetch(`${baseUrl}/api/notes/${id}`);
   if (!res.ok) {
-    return <div>Ошибка загрузки заметки</div>;
+    const text = await res.text();
+    return (
+      <div>
+        Ошибка загрузки заметки: {res.status} {text}
+      </div>
+    );
   }
   const note = await res.json();
   if (!note) return <div>Заметка не найдена</div>;
