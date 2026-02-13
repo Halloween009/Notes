@@ -13,20 +13,20 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const note = await request.json();
-    await db.collection("notes").doc(String(note.id)).set(note);
-    return NextResponse.json({ success: true, id: note.id, ...note });
+    const body = await request.json();
+    const ref = db.collection("notes").doc();
+    const note = {
+      id: ref.id,
+      title: body.title ?? "",
+      description: body.description ?? "",
+      category: body.category ?? "other",
+      type: body.type ?? "note",
+      url: body.url ?? "",
+      createdAt: body.createdAt ?? new Date().toISOString(),
+    };
+    await ref.set(note);
+    return NextResponse.json({ success: true, ...note });
   } catch (error) {
     return NextResponse.json({ error: "Error adding note" }, { status: 500 });
-  }
-}
-
-export async function DELETE(request: Request) {
-  try {
-    const { id } = await request.json();
-    await db.collection("notes").doc(String(id)).delete();
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: "Error deleting note" }, { status: 500 });
   }
 }

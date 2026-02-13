@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { Note } from "@/types/types";
 import CustomDropdown from "./CustomDropdown";
 import CustomButton from "./CustomButton";
-import CustomInput from "./CustomInput";
 import Pagination from "./Pagination";
+import { SearchInput } from "./ClientSide";
 
 const NotesList = ({ notes }: { notes: Note[] }) => (
   <div className="grid lg:grid-cols-4 gap-5 md:grid-cols-2 ">
@@ -34,7 +34,7 @@ const Notes = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       const res = await fetch("/api/notes");
-      const data = await res.json();
+      const data: Note[] = await res.json();
       if (Array.isArray(data)) setNotes(data);
       else {
         setNotes([]);
@@ -75,12 +75,7 @@ const Notes = () => {
   return (
     <div className="flex flex-col w-3/4 items-center">
       <div className="flex flex-row items-center gap-6 m-8">
-        <CustomInput
-          name="search"
-          value={searchValue}
-          placeholder="Search"
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
+        <SearchInput />
         <CustomDropdown
           name="category"
           value={category}

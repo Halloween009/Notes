@@ -2,7 +2,7 @@ export type Category = "frontend" | "backend" | "career" | "other" | "all";
 export type NoteType = "note" | "link";
 
 export interface Note {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   category: Category;

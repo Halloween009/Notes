@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "../firebase";
+import { Note } from "@/types/types";
 
 export async function GET(
   _: NextRequest,
@@ -7,15 +8,11 @@ export async function GET(
 ) {
   const { id } = await context.params;
   try {
-    const snapshot = await db.collection("notes").get();
-    const note = snapshot.docs.find((doc) => doc.id === String(id));
+    const note = await db.collection("notes").doc(id).get();
     if (!note) {
-      return NextResponse.json(
-        { error: "not found", env: process.env },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: "not found" }, { status: 404 });
     }
-    return NextResponse.json({ id: note.id, ...note.data(), env: process.env });
+    return NextResponse.json({ id: note.id, ...note.data() });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(

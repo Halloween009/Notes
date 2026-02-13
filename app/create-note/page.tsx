@@ -1,11 +1,12 @@
 "use client";
 
-import CustomInput from "../../components/CustomInput";
-import CustomDropdown from "../../components/CustomDropdown";
+import CustomInput from "@/components/CustomInput";
+import CustomDropdown from "@/components/CustomDropdown";
 import { useState } from "react";
 import CustomButton from "@/components/CustomButton";
 import { Category, NoteType } from "@/types/types";
 import { useRouter } from "next/navigation";
+import { Note } from "@/types/types";
 
 const CustomForm = () => {
   const [title, setTitle] = useState("");
@@ -16,8 +17,7 @@ const CustomForm = () => {
   const router = useRouter();
 
   const handleAdd = async () => {
-    const newNote = {
-      id: Date.now().toString(),
+    const newNote: Note = {
       title,
       description,
       category: category as Category,
